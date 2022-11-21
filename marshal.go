@@ -2,9 +2,8 @@ package querystring
 
 import (
 	"fmt"
-	"reflect"
-	// "strconv"
 	"net/url"
+	"reflect"
 	"strings"
 	"time"
 )
@@ -22,8 +21,8 @@ func Stringify(obj interface{}) (string, error) {
 }
 
 func encode(val interface{}, prefix string, values url.Values) error {
+
 	v := reflect.ValueOf(val)
-	// v := reflect.TypeOf(val)
 
 	if v.Kind() == reflect.Ptr {
 		if v.IsNil() {
@@ -52,7 +51,6 @@ func encode(val interface{}, prefix string, values url.Values) error {
 			}
 
 			err := encode(itemValue.Interface(), prefix+key, values)
-			// fmt.Printf("map str %+v %+v", values, err)
 
 			if err != nil {
 				return err
@@ -69,9 +67,7 @@ func encode(val interface{}, prefix string, values url.Values) error {
 				sliceValue = sliceValue.Elem()
 			}
 			key := fmt.Sprintf("[%d]", i)
-
 			err := encode(sliceValue.Interface(), prefix+key, values)
-			// fmt.Printf("slice str %s %+v", str, err)
 
 			if err != nil {
 				return err
@@ -93,8 +89,6 @@ func parseFieldTag(tag string) (string, []string) {
 }
 func encodeStruct(v reflect.Value, prefix string, values url.Values) error {
 
-	// fmt.Printf("encodeStruct...prefix:%s\n", prefix)
-	// components := ""
 	typ := v.Type()
 
 	for i := 0; i < v.NumField(); i++ {
@@ -121,7 +115,6 @@ func encodeStruct(v reflect.Value, prefix string, values url.Values) error {
 			key = fmt.Sprintf("[%s]", name)
 		}
 
-		// fmt.Printf("tf.Name:%s\n", name)
 		switch sv.Interface().(type) {
 
 		case int, int8, int16, int32, int64,
