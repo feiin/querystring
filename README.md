@@ -16,7 +16,7 @@ import (
 )
 
 //obj support  struct , map , interface{}
-qs := querystring.Marshal(obj)
+qs, err := querystring.Marshal(obj)
 fmt.Printf("qs:%s",qs) //a=b&c=d.....
 
 ```
